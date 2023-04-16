@@ -11,40 +11,33 @@ const shoppingIcon = document.querySelector('.nav-shopping-cart')
 const asideShopping = document.querySelector('.my-order-container')
 //RENDER CARTS
 const cardsContainer =document.querySelector('.cards-container')
-
+//INFO PRODUCT
+const asideInfoP = document.querySelector('.product-detail')
+const asideInfoPclose =document.querySelector('.product-detail-close')
 //MENU DESKTOP LOGIC
 menuEmail.addEventListener('click', toggleDesktopMenu);
 
 function toggleDesktopMenu(){
-    if (!asideShopping.classList.contains('inactive-aside')){
-        asideShopping.classList.add('inactive-aside')
-    }
     desktopMenu.classList.toggle('inactive');
-    
+    asideShopping.classList.add('inactive-aside');
+    asideInfoP.classList.add('inactive-aside')
 }
-
 //MENU MOBILE LOGIC
 menuIcon.addEventListener('click', toggleMobilepMenu)
 
 function toggleMobilepMenu(){
-    if(!asideShopping.classList.contains('inactive-aside')){
-        asideShopping.classList.add('inactive-aside')
-    }
+    asideShopping.classList.add('inactive-aside');
+    asideInfoP.classList.add('inactive-aside')
     mobileMenu.classList.toggle('slideMenuB')
 }
 //SHOPPING CART LOGIC
 shoppingIcon.addEventListener('click', toggleShoppingMenu)
 
 function toggleShoppingMenu(){
-    const isMobileMenuClosed = mobileMenu.classList.contains('slideMenuB')
-    if(!isMobileMenuClosed){
-        mobileMenu.classList.add('slideMenuB')
-    } else if (!desktopMenu.classList.contains('inactive')){
-        desktopMenu.classList.add('inactive')
-    }
-
     asideShopping.classList.toggle('inactive-aside')
-    
+    asideInfoP.classList.add('inactive-aside')
+    mobileMenu.classList.add('slideMenuB')
+    desktopMenu.classList.add('inactive');
 }
 
 const productList = [];
@@ -98,6 +91,7 @@ function renderProducts(array) {
         const productImg = document.createElement('img');
         productImg.classList.add('product-img');
         productImg.setAttribute('src', product.image);
+        productImg.addEventListener('click', openProductDetailAside)
         
         const productShop = document.createElement('div');
         productShop.classList.add('product-shop');
@@ -125,3 +119,14 @@ function renderProducts(array) {
     }
 }
 renderProducts(productList)
+// INFO PRODUCT LOGIC
+function openProductDetailAside() {
+    asideInfoP.classList.remove('inactive-aside')
+    asideShopping.classList.add('inactive-aside')
+    mobileMenu.classList.add('slideMenuB')
+    desktopMenu.classList.add('inactive');
+}
+asideInfoPclose.addEventListener('click', closeProductInfo)
+function closeProductInfo(){
+    asideInfoP.classList.add('inactive-aside')
+}
